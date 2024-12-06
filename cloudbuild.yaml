@@ -28,13 +28,13 @@
 # options:
 #  logging: CLOUD_LOGGING_ONLY
 # ---------------------------
-
 steps:
 - name: 'hashicorp/terraform:light'
   entrypoint: '/bin/sh'
   args:
   - '-c'
   - |
+    export GOOGLE_APPLICATION_CREDENTIALS=/workspace/service-account.json &&
     terraform init
 
 - name: 'hashicorp/terraform:light'
@@ -42,16 +42,16 @@ steps:
   args:
   - '-c'
   - |
+    export GOOGLE_APPLICATION_CREDENTIALS=/workspace/service-account.json &&
     terraform plan -out=/workspace/tfplan
-  dir: /workspace
 
 - name: 'hashicorp/terraform:light'
   entrypoint: '/bin/sh'
   args:
   - '-c'
   - |
+    export GOOGLE_APPLICATION_CREDENTIALS=/workspace/service-account.json &&
     terraform apply -auto-approve /workspace/tfplan
-  dir: /workspace
 
 options:
   logging: CLOUD_LOGGING_ONLY
