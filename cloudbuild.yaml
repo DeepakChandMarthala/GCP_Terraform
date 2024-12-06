@@ -6,15 +6,13 @@ steps:
   - |
     terraform init &&
     terraform apply -auto-approve
+  env:
+  - GOOGLE_APPLICATION_CREDENTIALS=service-account.json # Environment variable for authentication
 
 # Specify a logging option for better traceability
 options:
   logging: CLOUD_LOGGING_ONLY
-  machineType: 'E2_HIGHCPU_8' # Adjust machine type if needed for performance
-
-# Environment variable to specify service account credentials
-env:
-  - GOOGLE_APPLICATION_CREDENTIALS=service-account.json # Service account file
+  machineType: 'E2_HIGHCPU_8' # Optional: Adjust machine type if needed for performance
 
 # Artifacts (optional): Specify if you want to save build artifacts
 artifacts:
