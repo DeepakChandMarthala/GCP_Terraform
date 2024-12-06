@@ -7,16 +7,18 @@ steps:
     terraform init &&
     terraform apply -auto-approve
 
-# Optional: Specify a logging option for better traceability
+# Specify a logging option for better traceability
 options:
   logging: CLOUD_LOGGING_ONLY
-  machineType: 'E2_HIGHCPU_8' # Optional: Adjust machine type if needed for performance
-  env:
+  machineType: 'E2_HIGHCPU_8' # Adjust machine type if needed for performance
+
+# Environment variable to specify service account credentials
+env:
   - GOOGLE_APPLICATION_CREDENTIALS=service-account.json # Service account file
 
 # Artifacts (optional): Specify if you want to save build artifacts
 artifacts:
   objects:
-    location: gs://YOUR_PROJECT_ID-cloudbuild-artifacts/
+    location: gs://adept-odyssey-443800-t2-cloudbuild-artifacts/
     paths:
     - "*.tfstate" # Save Terraform state files as artifacts (if needed)
