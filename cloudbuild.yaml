@@ -1,12 +1,12 @@
 steps:
 - name: 'hashicorp/terraform:light'
   entrypoint: '/bin/sh'
-  env:
-  - "GOOGLE_APPLICATION_CREDENTIALS=service-account.json"
   args:
   - '-c'
   - |
     terraform init &&
     terraform apply -auto-approve
 
-
+# Optional: Specify a logging bucket for build logs
+options:
+  logging: CLOUD_LOGGING_ONLY
