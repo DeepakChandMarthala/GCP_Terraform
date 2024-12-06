@@ -28,6 +28,7 @@
 # options:
 #  logging: CLOUD_LOGGING_ONLY
 # ---------------------------
+
 steps:
 - name: 'hashicorp/terraform:light'
   entrypoint: '/bin/sh'
@@ -41,7 +42,7 @@ steps:
   args:
   - '-c'
   - |
-    terraform plan -out=tfplan
+    terraform plan -out=/workspace/tfplan
   dir: /workspace
 
 - name: 'hashicorp/terraform:light'
@@ -49,11 +50,8 @@ steps:
   args:
   - '-c'
   - |
-    terraform apply -auto-approve tfplan
+    terraform apply -auto-approve /workspace/tfplan
   dir: /workspace
 
 options:
   logging: CLOUD_LOGGING_ONLY
-
-
-
