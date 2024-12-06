@@ -1,22 +1,12 @@
 steps:
 - name: 'hashicorp/terraform:light'
   entrypoint: '/bin/sh'
+  env:
+  - GOOGLE_APPLICATION_CREDENTIALS=service-account.json
   args:
   - '-c'
   - |
     terraform init &&
     terraform apply -auto-approve
-  env:
-  - GOOGLE_APPLICATION_CREDENTIALS=service-account.json # Environment variable for authentication
-
-# Specify a logging option for better traceability
 options:
   logging: CLOUD_LOGGING_ONLY
-  machineType: 'E2_HIGHCPU_8' # Optional: Adjust machine type if needed for performance
-
-# Artifacts (optional): Specify if you want to save build artifacts
-artifacts:
-  objects:
-    location: gs://adept-odyssey-443800-t2-cloudbuild-artifacts/
-    paths:
-    - "*.tfstate" # Save Terraform state files as artifacts (if needed)
