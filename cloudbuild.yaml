@@ -10,70 +10,70 @@
 #   logging: CLOUD_LOGGING_ONLY
 # ---------------------------
 
-steps:
-- name: 'hashicorp/terraform:light'
-  entrypoint: '/bin/sh'
-  args:
-  - '-c'
-  - |
-    terraform init
-
-- name: 'hashicorp/terraform:light'
-  entrypoint: '/bin/sh'
-  args:
-  - '-c'
-  - |
-    terraform plan -out=tfplan
-
-options:
- logging: CLOUD_LOGGING_ONLY
-# ---------------------------
 # steps:
-# # Step 1: Initialize Terraform
 # - name: 'hashicorp/terraform:light'
 #   entrypoint: '/bin/sh'
 #   args:
 #   - '-c'
 #   - |
-#     export GOOGLE_APPLICATION_CREDENTIALS=/workspace/service-account.json &&
 #     terraform init
 
-# # Step 2: Validate Terraform Configuration
 # - name: 'hashicorp/terraform:light'
 #   entrypoint: '/bin/sh'
 #   args:
 #   - '-c'
 #   - |
-#     export GOOGLE_APPLICATION_CREDENTIALS=/workspace/service-account.json &&
-#     terraform validate
-
-# # Step 3: Plan Terraform Execution
-# - name: 'hashicorp/terraform:light'
-#   entrypoint: '/bin/sh'
-#   args:
-#   - '-c'
-#   - |
-#     export GOOGLE_APPLICATION_CREDENTIALS=/workspace/service-account.json &&
 #     terraform plan -out=tfplan
 
-# # Step 4: Apply Terraform Plan
-# - name: 'hashicorp/terraform:light'
-#   entrypoint: '/bin/sh'
-#   args:
-#   - '-c'
-#   - |
-#     export GOOGLE_APPLICATION_CREDENTIALS=/workspace/service-account.json &&
-#     terraform apply -auto-approve tfplan
-
-# # Optional: Specify options for logging and machine types
 # options:
-#   logging: CLOUD_LOGGING_ONLY
-#   machineType: 'E2_HIGHCPU_8'
+#  logging: CLOUD_LOGGING_ONLY
+# ---------------------------
+steps:
+# Step 1: Initialize Terraform
+- name: 'hashicorp/terraform:light'
+  entrypoint: '/bin/sh'
+  args:
+  - '-c'
+  - |
+    export GOOGLE_APPLICATION_CREDENTIALS=/workspace/service-account.json &&
+    terraform init
 
-# # Optional: Save build artifacts such as Terraform state files
-# artifacts:
-#   objects:
-#     location: gs://YOUR_PROJECT_ID-cloudbuild-artifacts/
-#     paths:
-#     - '*.tfstate'
-#     - '*.tfplan'
+# Step 2: Validate Terraform Configuration
+- name: 'hashicorp/terraform:light'
+  entrypoint: '/bin/sh'
+  args:
+  - '-c'
+  - |
+    export GOOGLE_APPLICATION_CREDENTIALS=/workspace/service-account.json &&
+    terraform validate
+
+# Step 3: Plan Terraform Execution
+- name: 'hashicorp/terraform:light'
+  entrypoint: '/bin/sh'
+  args:
+  - '-c'
+  - |
+    export GOOGLE_APPLICATION_CREDENTIALS=/workspace/service-account.json &&
+    terraform plan -out=tfplan
+
+# Step 4: Apply Terraform Plan
+- name: 'hashicorp/terraform:light'
+  entrypoint: '/bin/sh'
+  args:
+  - '-c'
+  - |
+    export GOOGLE_APPLICATION_CREDENTIALS=/workspace/service-account.json &&
+    terraform apply -auto-approve tfplan
+
+# Optional: Specify options for logging and machine types
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: 'E2_HIGHCPU_8'
+
+# Optional: Save build artifacts such as Terraform state files
+artifacts:
+  objects:
+    location: gs://YOUR_PROJECT_ID-cloudbuild-artifacts/
+    paths:
+    - '*.tfstate'
+    - '*.tfplan'
